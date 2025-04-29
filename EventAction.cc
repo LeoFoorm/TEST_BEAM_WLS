@@ -410,40 +410,40 @@ G4cout << G4endl;
 G4cout << "------------------------------------------------------------" << G4endl;
 G4cout << G4endl;
 
-G4cout <<"A | POSITION X : " << G4endl;
+G4cout <<"LAYER A | POSITION X : " << G4endl;
 for(const auto& pos_x_A :pos_layer_A_x){
         G4cout << pos_x_A << " cm, ";
         man->FillNtupleDColumn(1, 26, pos_x_A);
 
 }
-
-G4cout <<"A | POSITION Y: " << G4endl;
+G4cout << "" << G4endl;
+G4cout <<"LAYER A | POSITION Y: " << G4endl;
 for(const auto& pos_y_A :pos_layer_A_y){
         G4cout << pos_y_A << " cm, ";
         man->FillNtupleDColumn(1, 27, pos_y_A);
 }
-
-G4cout <<"A | POSITION Z: " << G4endl;
+G4cout << "" << G4endl;
+G4cout <<"LAYER A | POSITION Z: " << G4endl;
 for(const auto& pos_z_A :pos_layer_A_z){
         G4cout << pos_z_A << " cm, ";
         man->FillNtupleDColumn(1, 28, pos_z_A);
 }
-
+G4cout << "" << G4endl;
 G4cout << "" << G4endl;
 
-G4cout <<"B | POSITION X: "<< G4endl;
+G4cout <<"LAYER B | POSITION X: "<< G4endl;
 for(const auto& pos_x_B :pos_layer_B_x){
         G4cout << pos_x_B << " cm, ";
         man->FillNtupleDColumn(1, 29, pos_x_B);
 }
-
-G4cout <<"B | POSITION Y: " << G4endl;
+G4cout << "" << G4endl;
+G4cout <<"LAYER B | POSITION Y: " << G4endl;
 for(const auto& pos_y_B :pos_layer_B_y){
         G4cout << pos_y_B << " cm, ";
         man->FillNtupleDColumn(1, 30, pos_y_B);
 }
-
-G4cout <<"B | POSITION Z: " << G4endl;
+G4cout << "" << G4endl;
+G4cout <<"LAYER B | POSITION Z: " << G4endl;
 for(const auto& pos_z_B :pos_layer_B_z){
         G4cout << pos_z_B << " cm, ";
         man->FillNtupleDColumn(1, 31, pos_z_B);
