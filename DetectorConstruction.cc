@@ -21,7 +21,7 @@ DetectorConstruction::DetectorConstruction()
   env_sizeY = 4*m;
   env_sizeZ = 4*m;
 
-  distance_modules = 10*cm + 1.04*cm;
+  distance_modules = 10*cm + 1.02*cm;
 
   Test_Beam = true; 
 }
@@ -311,7 +311,7 @@ for (G4int l = 0; l < 2; l++)
   G4RotationMatrix* rotationY = new G4RotationMatrix(); 
   rotationY->rotateY(90*deg);
 
-  for (G4int l = 0; l < 3; l++)
+  /*for (G4int l = 0; l < 3; l++)
   {
   Logicbar_B = new G4LogicalVolume(Solidbar, plastic, "Logicbar_B_"+std::to_string(l));
   LogicBars_B.push_back(Logicbar_B);
@@ -368,13 +368,13 @@ for (G4int l = 0; l < 3; l++)
 
   Physical_Fiber_B = new  G4PVPlacement(rotationY, G4ThreeVector(0, distance_modules - 0.1 * cm,  -7.602 * cm + (5.102*l) * cm),
                                    Logic_Fiber_B, "Physical_Fiber_B_down", LogicWorld, false, l, true);
- }
+ }*/
 
    
 
   //---------------  STEEL-ABSORBER  ---------------
 
-  /*G4double SA_X = 50*cm;
+  G4double SA_X = 50*cm;
   G4double SA_Y = 30*cm;
   G4double SA_Z = 50*cm;
 
@@ -382,7 +382,7 @@ for (G4int l = 0; l < 3; l++)
 
   SolidSA = new G4Box("SolidSA", SA_X, SA_Y, SA_Z );
   LogicalSA = new G4LogicalVolume(SolidSA, steel, "LogicSA");
-  PhysicalSA = new G4PVPlacement(0, positionSA, LogicalSA, "PhysicalSA", LogicWorld, false, 5, true);*/
+  PhysicalSA = new G4PVPlacement(0, positionSA, LogicalSA, "PhysicalSA", LogicWorld, false, 5, true);
 
 
   //---------------       TRIGGERS    --------------- 
