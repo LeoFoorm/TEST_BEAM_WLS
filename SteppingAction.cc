@@ -147,8 +147,8 @@ if(particle->GetParticleName() == "mu+" ||  particle->GetParticleName() == "pi+"
 
    
    //---------------------------------------
-      G4cout << "PARTICLE ON LAYER A |  "<<p_name << " | position: (" << position_A.x() /cm <<  ", " <<  position_A.y() / cm << ", "
-               << position_A.z() / cm << ") cm "<< G4endl; 
+      /*G4cout << "PARTICLE ON LAYER A |  "<<p_name << " | position: (" << position_A.x() /cm <<  ", " <<  position_A.y() / cm << ", "
+               << position_A.z() / cm << ") cm "<< G4endl; */
    //---------------------------------------
 
 
@@ -197,8 +197,8 @@ if(particle->GetParticleName() == "mu+" ||  particle->GetParticleName() == "pi+"
 
 
         //---------------------------------------
-        G4cout<< "PARTICLE ON LAYER B |  " << p_name << " | position: (" << position_B.x() /cm <<  ", " <<  position_B.y() / cm << ", "
-               << position_B.z() / cm << ") cm "<< G4endl; 
+        /*G4cout<< "PARTICLE ON LAYER B |  " << p_name << " | position: (" << position_B.x() /cm <<  ", " <<  position_B.y() / cm << ", "
+               << position_B.z() / cm << ") cm "<< G4endl;*/ 
         //---------------------------------------
 
 

@@ -115,7 +115,7 @@ void EventAction::EndOfEventAction(const G4Event*)
 G4AnalysisManager *man = G4AnalysisManager::Instance();  
 //------------------------------------------------------------------------------------------
 G4cout << "------------------------------------------------------------\n" << G4endl;
-G4cout << "PARTICLES DETECTED PER TRIGGER:"<<G4endl;
+//G4cout << "PARTICLES DETECTED PER TRIGGER:"<<G4endl;
 
 //G4cout << "TRIGGER 1: ";
     if(Trig_1 == 0){
@@ -350,7 +350,7 @@ if (traversed_Bars_A.empty()) {
 
 G4cout << "LAYER B | ID: ";
  if(traversed_Bars_B.empty()){
-        G4cout<< "non (0)";
+        G4cout<< "0  (O means no particle has passed.)";
         man->FillNtupleIColumn(1,24,0);
     }else{
     for (auto bar_b : traversed_Bars_B) {
@@ -410,20 +410,20 @@ G4cout << G4endl;
 G4cout << "------------------------------------------------------------" << G4endl;
 G4cout << G4endl;
 
-G4cout <<"(A) POSITION X : " << G4endl;
+G4cout <<"A | POSITION X : " << G4endl;
 for(const auto& pos_x_A :pos_layer_A_x){
         G4cout << pos_x_A << " cm, ";
         man->FillNtupleDColumn(1, 26, pos_x_A);
 
 }
-G4cout << "" << G4endl;
-G4cout <<"(A) POSITION Y: " << G4endl;
+
+G4cout <<"A | POSITION Y: " << G4endl;
 for(const auto& pos_y_A :pos_layer_A_y){
         G4cout << pos_y_A << " cm, ";
         man->FillNtupleDColumn(1, 27, pos_y_A);
 }
-G4cout << "" << G4endl;
-G4cout <<"(A) POSITION Z: " << G4endl;
+
+G4cout <<"A | POSITION Z: " << G4endl;
 for(const auto& pos_z_A :pos_layer_A_z){
         G4cout << pos_z_A << " cm, ";
         man->FillNtupleDColumn(1, 28, pos_z_A);
@@ -431,19 +431,19 @@ for(const auto& pos_z_A :pos_layer_A_z){
 
 G4cout << "" << G4endl;
 
-G4cout <<"(B) POSITION X: "<< G4endl;
+G4cout <<"B | POSITION X: "<< G4endl;
 for(const auto& pos_x_B :pos_layer_B_x){
         G4cout << pos_x_B << " cm, ";
         man->FillNtupleDColumn(1, 29, pos_x_B);
 }
-G4cout << "" << G4endl;
-G4cout <<"(B) POSITION Y: " << G4endl;
+
+G4cout <<"B | POSITION Y: " << G4endl;
 for(const auto& pos_y_B :pos_layer_B_y){
         G4cout << pos_y_B << " cm, ";
         man->FillNtupleDColumn(1, 30, pos_y_B);
 }
-G4cout << "" << G4endl;
-G4cout <<"(B) POSITION Z: " << G4endl;
+
+G4cout <<"B | POSITION Z: " << G4endl;
 for(const auto& pos_z_B :pos_layer_B_z){
         G4cout << pos_z_B << " cm, ";
         man->FillNtupleDColumn(1, 31, pos_z_B);
