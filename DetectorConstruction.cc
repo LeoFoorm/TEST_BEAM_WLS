@@ -89,13 +89,13 @@ void DetectorConstruction::DefineMaterials()
 
   vector<G4double> RIndexFiber(85, 1.59);
           
-  vector<G4double> AbsFiber (45, 3.51*m);
-   AbsFiber.insert(AbsFiber.end(), 40, 0.01*m);
+  vector<G4double> AbsFiber (85, 3.5*m);
+   //AbsFiber.insert(AbsFiber.end(), 40, 3.5*m);
       
   vector<G4double> EmissionFiber(17, 2.0);
    EmissionFiber.insert(EmissionFiber.end(), 17, 5.0);
    EmissionFiber.insert(EmissionFiber.end(), 11, 10.0); //<--
-   EmissionFiber.insert(EmissionFiber.end(), 40, 0.0); //<--
+   EmissionFiber.insert(EmissionFiber.end(), 40, 0.1); //<--
 
   /*vector<G4double> AbsFiber (40, 0.01*m);
    AbsFiber.insert(AbsFiber.end(), 45, 3.51*m);
@@ -219,7 +219,7 @@ void DetectorConstruction::ConstructTESTBEAM()
   G4double mylar_y = 0.51*cm;
   G4double mylar_z = 50.001*cm;
  Solidmylar = new G4Box("Solidmylar", mylar_x, mylar_y, mylar_z);
- SolidInnermylar = new G4Box("SolidInnermylar", mylar_x - 0.001*cm, mylar_y - 0.001*cm, mylar_z - 0.001*cm); //<---  |   0.0001 
+ SolidInnermylar = new G4Box("SolidInnermylar", mylar_x - 0.001*cm, mylar_y - 0.001*cm, mylar_z - 0.001*cm); 
 
  G4SubtractionSolid* hollowMylarBox = new G4SubtractionSolid("HollowMylarBox", Solidmylar, SolidInnermylar);
 

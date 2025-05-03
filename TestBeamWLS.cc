@@ -39,7 +39,7 @@ int main(int argc,char** argv)
     runManager->SetUserInitialization(new PhysicsList());
     runManager->SetUserInitialization(new ActionInitialization());
     
-    //runManager->Initialize(); 
+    runManager->Initialize(); 
     
     G4UIExecutive *ui = 0;
     if(argc==1)
@@ -49,6 +49,9 @@ int main(int argc,char** argv)
     G4VisManager * visManager = new G4VisExecutive();
     visManager->Initialize();
     G4UImanager *UImanager = G4UImanager::GetUIpointer();
+
+ //UImanager->ApplyCommand("/event/verbose 2");     // Show event details
+
     if(ui)
     {
     UImanager->ApplyCommand("/vis/open OGL");
@@ -74,6 +77,10 @@ int main(int argc,char** argv)
         G4String fileName = argv[1];
         UImanager->ApplyCommand(command+fileName);
     }
+
+    delete ui;
+    delete visManager;
+    delete runManager;
     return 0;
 }
 
