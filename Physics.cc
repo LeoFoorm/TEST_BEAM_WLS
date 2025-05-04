@@ -39,6 +39,13 @@ PhysicsList::PhysicsList()
 	opticalParams->SetWLSTimeProfile("delta"); // o "exponential"
 
 
+    // Disable tracking secondaries first for optical photons
+    //opticalParams->SetTrackSecondariesFirst(kOpticalPhoton, false);
+    
+    // Limit number of optical photons generated per step
+   // opticalParams->SetMaxNumPhotonsPerStep(100);
+
+
 	// BEFORE
 
 	/*RegisterPhysics (new G4EmStandardPhysics());
