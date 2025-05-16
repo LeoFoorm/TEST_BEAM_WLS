@@ -10,6 +10,7 @@
 #include "G4IonPhysics.hh"
 #include "G4DecayPhysics.hh" 
 #include "G4OpticalParameters.hh"
+#include "G4UImanager.hh"
 
 
 PhysicsList::PhysicsList()
@@ -28,7 +29,14 @@ PhysicsList::PhysicsList()
 
     // Register optical physics for scintillation
     G4OpticalPhysics* opticalPhysics = new G4OpticalPhysics();
+    //opticalPhysics->SetTrackSecondariesFirst(false); 
+    //opticalPhysics->SetMaxNumPhotonsPerStep(100); 
     RegisterPhysics(opticalPhysics);
+
+    G4UImanager* uiManager = G4UImanager::GetUIpointer();
+    uiManager->ApplyCommand("/optics/trackSecondariesFirst false");
+    uiManager->ApplyCommand("/optics/maxNumPhotonsPerStep 100");
+
 
     // Configure optical processes using G4OpticalParameters
     G4OpticalParameters* opticalParams = G4OpticalParameters::Instance();
@@ -38,36 +46,26 @@ PhysicsList::PhysicsList()
 	opticalParams->SetProcessActivation("OpWLS", true);			  // Enable WLS processes
 	opticalParams->SetWLSTimeProfile("delta"); // o "exponential"
 
+    
+
+
+    //opticalPhysics->SetParameter("optical/trackSecondariesFirst", false);
+    //opticalPhysics->SetParameter("optical/maxNumPhotonsPerStep", 100);
+
+    // ===================================================================
 
     // Disable tracking secondaries first for optical photons
-    //opticalParams->SetTrackSecondariesFirst(kOpticalPhoton, false);
+    /*opticalParams->SetTrackSecondariesFirst(kOpticalPhoton, false);
     
     // Limit number of optical photons generated per step
-   // opticalParams->SetMaxNumPhotonsPerStep(100);
+    opticalParams->SetMaxNumPhotonsPerStep(100);*/
 
 
-	// BEFORE
-
-	/*RegisterPhysics (new G4EmStandardPhysics());
-
-    G4OpticalPhysics* opticalPhysics = new G4OpticalPhysics();
-	RegisterPhysics(opticalPhysics);
-
-	RegisterPhysics (new G4DecayPhysics());
-
-	RegisterPhysics (new G4RadioactiveDecayPhysics());
-
-	RegisterPhysics(new G4HadronPhysicsQGSP_BERT());
-
-
-	RegisterPhysics( new G4EmExtraPhysics());
-
-	RegisterPhysics( new G4HadronElasticPhysicsHP());
-
-
-	RegisterPhysics( new G4StoppingPhysics());
-
-	RegisterPhysics( new G4IonPhysics());*/
+    /*opticalParams->SetScintTrackSecondariesFirst(false);
+    opticalParams->SetCerenkovMaxPhotonsPerStep(100);
+    opticalParams->SetCerenkovMaxBetaChange(10.0);
+    opticalParams->SetScinStackPhotons(false);
+    opticalParams->SetVerboseLevel();*/
 
 }
 

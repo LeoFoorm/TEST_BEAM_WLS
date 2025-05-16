@@ -31,7 +31,7 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 
 
    
-    G4ThreeVector position(0*m, 3.0556*m, 0); // <-- y : 3.0556*m | position(-0.025*m, 3.0556*m, 0); 
+    G4ThreeVector position(0.01*m, 3.0556*m, 0); // <-- y : 3.0556*m | position(-0.025*m, 3.0556*m, 0); 
 
     G4double thetaMin = 0. * deg;
     G4double thetaMax = 0. * deg; 

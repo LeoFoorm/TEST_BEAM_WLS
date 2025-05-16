@@ -50,7 +50,7 @@ int main(int argc,char** argv)
     visManager->Initialize();
     G4UImanager *UImanager = G4UImanager::GetUIpointer();
 
- //UImanager->ApplyCommand("/event/verbose 2");     // Show event details
+ UImanager->ApplyCommand("/event/verbose 2");     // Show event details
 
     if(ui)
     {

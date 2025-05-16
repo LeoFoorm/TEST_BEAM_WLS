@@ -8,6 +8,7 @@
 #include <iostream>
 #include <tuple>
 #include "G4UserLimits.hh"  
+
 using namespace std;
 
 DetectorConstruction::DetectorConstruction()
@@ -76,7 +77,7 @@ void DetectorConstruction::DefineMaterials()
   G4int numberOfEntries = energy.size();
 
 
-  //REQUIRED DATA FOR WLS
+  // ======= REQUIRED DATA FOR WLS =======
 
   vector<G4double> wavelength_wls = {550.02, 549.98, 548.49, 547.07, 546.86, 545.44, 544.51, 543.31, 542.32, 541.38, 540.26, 538.04, 537.59, 536.95, 535.00, 532.16, 530.67, 528.30, 527.21, 526.37, 525.08, 524.47, 523.50, 522.50, 521.56, 520.19, 518.93, 517.11, 516.07, 515.64, 513.88, 512.76, 511.53, 510.19, 508.43, 505.02, 503.76, 501.05, 500.01, 499.83, 496.62, 491.92, 487.22, 482.51, 476, 473.10, 468.40, 463.69, 458.99, 454.28, 449.58, 445.30, 441.45, 438.03, 434.18, 430, 429.69, 425.20, 417.03, 415.36, 414.08, 413.22, 412.53, 411.60, 410.66, 409.80, 408.53, 405.80, 402.75, 400.18, 399.32, 397.27, 396.33, 395.48, 394.62, 394.28, 392.91, 392.27, 391.41, 390.34, 389.70, 388.42, 386.63, 384.57, 381.58, 380.31};
     vector<G4double> PhotonEnergy;
@@ -93,10 +94,17 @@ void DetectorConstruction::DefineMaterials()
   vector<G4double> AbsFiber (86, 3.5*m);
    //AbsFiber.insert(AbsFiber.end(), 40, 3.5*m);
       
-  vector<G4double> EmissionFiber(17, 2.0);
+  vector<G4double> EmissionFiber(17, 0.2);
+   EmissionFiber.insert(EmissionFiber.end(), 18, 0.5);
+   EmissionFiber.insert(EmissionFiber.end(), 11, 0.8); //<--
+   EmissionFiber.insert(EmissionFiber.end(), 40, 0.02); //<--
+
+
+  /*vector<G4double> EmissionFiber(17, 2.0);
    EmissionFiber.insert(EmissionFiber.end(), 18, 5.0);
-   EmissionFiber.insert(EmissionFiber.end(), 11, 10.0); //<--
-   EmissionFiber.insert(EmissionFiber.end(), 40, 0.2); //<--
+   EmissionFiber.insert(EmissionFiber.end(), 11, 8.0); //<--
+   EmissionFiber.insert(EmissionFiber.end(), 40, 0.2); //<--*/
+// =================================
 
   /*vector<G4double> AbsFiber (40, 0.01*m);
    AbsFiber.insert(AbsFiber.end(), 45, 3.51*m);
@@ -169,6 +177,7 @@ propfiber->AddProperty("WLSABSLENGTH", PhotonEnergy, AbsFiber, numOfEnt2);
 propfiber->AddProperty("WLSCOMPONENT", PhotonEnergy, EmissionFiber, numOfEnt2);
 propfiber->AddConstProperty("WLSTIMECONSTANT", 1.0*ns);
 
+// ========== PEAKS ========== 
 propfiber->AddConstProperty("WLSABSLENGTHMAX", 2.883657674*eV, true); // Absorption peak
 propfiber->AddConstProperty("WLSCOMPONENTMAX", 2.604984874*eV, true); // Emission peak
 
@@ -304,13 +313,13 @@ for (G4int l = 0; l < 2; l++)
                                    Logic_Fiber_A, "Physical_Fiber_A_down", LogicWorld, false, l, true);
  }
 
-// ==== ADD STEP LIMITS FOR FIBERS A ====
-G4double maxStep = 1.0 * mm;
+// ====  STEP LIMITS FOR FIBERS A ====
+G4double maxStep = 0.5 * mm;
 G4UserLimits* fiberStepLimit = new G4UserLimits(maxStep);
 for (auto& fiberLogic : Logic_Fibers_A) {
     fiberLogic->SetUserLimits(fiberStepLimit);
 }
-
+// ===================================
 
 
 
@@ -388,8 +397,8 @@ for (G4int l = 0; l < 3; l++)
   G4ThreeVector  positionSA = G4ThreeVector(0, 138.86*cm, 0);
 
   SolidSA = new G4Box("SolidSA", SA_X, SA_Y, SA_Z );
-  LogicalSA = new G4LogicalVolume(SolidSA, steel, "LogicSA");
-  PhysicalSA = new G4PVPlacement(0, positionSA, LogicalSA, "PhysicalSA", LogicWorld, false, 5, true);
+  //LogicalSA = new G4LogicalVolume(SolidSA, steel, "LogicSA");
+  //PhysicalSA = new G4PVPlacement(0, positionSA, LogicalSA, "PhysicalSA", LogicWorld, false, 5, true);
 
 
   //---------------       TRIGGERS    --------------- 
