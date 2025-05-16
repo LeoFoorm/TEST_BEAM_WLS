@@ -35,7 +35,8 @@ PhysicsList::PhysicsList()
 
     G4UImanager* uiManager = G4UImanager::GetUIpointer();
     uiManager->ApplyCommand("/optics/trackSecondariesFirst false");
-    uiManager->ApplyCommand("/optics/maxNumPhotonsPerStep 100");
+    uiManager->ApplyCommand("/optics/maxNumPhotonsPerStep -1");
+    uiManager->ApplyCommand("/optical/verbose 1");
 
 
     // Configure optical processes using G4OpticalParameters
@@ -46,11 +47,12 @@ PhysicsList::PhysicsList()
 	opticalParams->SetProcessActivation("OpWLS", true);			  // Enable WLS processes
 	opticalParams->SetWLSTimeProfile("delta"); // o "exponential"
 
-    
+
+    //opticalParams->SetScintTrackSecondariesFirst(false);
+    //uiManager->ApplyCommand("/process/optical/scintillation/setMaxNumPhotonsPerStep 100");
 
 
-    //opticalPhysics->SetParameter("optical/trackSecondariesFirst", false);
-    //opticalPhysics->SetParameter("optical/maxNumPhotonsPerStep", 100);
+    //opticalParams->SetScintStackPhotons(false);
 
     // ===================================================================
 
