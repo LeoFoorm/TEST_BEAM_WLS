@@ -49,7 +49,7 @@ void DetectorConstruction::DefineMaterials()
   G4double RefIndex=1.58;
   G4double AbsSC = 160.*cm;
   G4double RIWorld = 1.0;
-  G4double Reflectivity = 0.9999;
+  G4double Reflectivity = 0.98;
   G4double Rindexmylar = 1.655;
 
 
@@ -168,7 +168,6 @@ void DetectorConstruction::DefineMaterials()
 
 
  mirrorsurface = new G4OpticalSurface("mirrorsurface");
-
  mirrorsurface->SetType(dielectric_dielectric);
  mirrorsurface->SetFinish(polishedfrontpainted);
  mirrorsurface->SetModel(unified);
@@ -374,7 +373,7 @@ for (G4int l = 0; l < 2; l++)
  // ==========  Optical surface ========== 
   G4OpticalSurface* op_surface_bar_clad = new G4OpticalSurface("BarCladSurface"); 
   op_surface_bar_clad->SetType(dielectric_dielectric); 
-  op_surface_bar_clad->SetFinish(polished);
+  op_surface_bar_clad->SetFinish(ground);
   op_surface_bar_clad->SetModel(unified);
 
 G4LogicalBorderSurface* border_one = new G4LogicalBorderSurface( "Bar_Clad-Surface_one", Physical_cladding_A, Physical_MID_A, op_surface_bar_clad);
@@ -487,8 +486,8 @@ for (G4int l = 0; l < 3; l++)
   op_surface_bar_clad->SetFinish(polished);
   op_surface_bar_clad->SetModel(unified);*/ // THIS IS UP
 
-G4LogicalBorderSurface* border_two = new G4LogicalBorderSurface( "Bar_Clad-Surface_two", Physical_cladding_B, Physical_MID_B, op_surface_bar_clad);
 
+G4LogicalBorderSurface* border_two = new G4LogicalBorderSurface( "Bar_Clad-Surface_two", Physical_cladding_B, Physical_MID_B, op_surface_bar_clad);
 
 for (auto& fiberLogic : Logic_Fibers_B) {
       fiberLogic->SetUserLimits(fiberStepLimit);
