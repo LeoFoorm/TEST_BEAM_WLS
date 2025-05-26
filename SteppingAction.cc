@@ -46,9 +46,18 @@ G4TouchableHandle touchedbar = step->GetPreStepPoint()->GetTouchableHandle();
   G4StepPoint *PreStep = step->GetPreStepPoint();
   G4double ltime = PreStep->GetLocalTime();  
   
+//================= KILING PHOTONS =====================
+// MATAR FOTONES ÓPTICOS TRAPADOS (> 1000 pasos)
+    if (particle == G4OpticalPhoton::OpticalPhotonDefinition()) {
+        if (track->GetCurrentStepNumber() > 1000) {
+            track->SetTrackStatus(fStopAndKill); // kill stuck photon
+            return; // Salir inmediatamente del método para evitar trabajo innecesario
+        }
+    }
+
 
   //Verify WLS worked:
-  if(particle->GetParticleName() == "opticalphoton"){
+  /*if(particle->GetParticleName() == "opticalphoton"){
      
      G4String creator;
 
@@ -60,19 +69,18 @@ G4TouchableHandle touchedbar = step->GetPreStepPoint()->GetTouchableHandle();
 
     if (creator == "OpWLS") {
 
-     //G4cout << "WLS DETECTED. Optical Photon created" << G4endl;
+     G4cout << "WLS DETECTED. Optical Photon created" << G4endl;
 
-        /*G4ThreeVector position = step->GetPreStepPoint()->GetPosition();
+        G4ThreeVector position = step->GetPreStepPoint()->GetPosition();
         G4double globalTime = track->GetGlobalTime();
         G4double localTime = step->GetPreStepPoint()->GetLocalTime();
 
         G4cout << ">>> [WLS DETECTED] Optical Photon created by WLS at position ("
                << position.x()/cm << ", " << position.y()/cm << ", " << position.z()/cm
                << ") cm | Global Time: " << globalTime/ns << " ns | Local Time: " << localTime/ns << " ns"
-               << G4endl;*/
-
+               << G4endl;
     }
-  }
+  }*/
 
 
  
