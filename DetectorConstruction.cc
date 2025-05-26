@@ -371,7 +371,13 @@ for (G4int l = 0; l < 2; l++)
   Physical_cladding_A = new  G4PVPlacement(0, G4ThreeVector(-5.05 * cm + (5.102*l) * cm, - 0.1 * cm, 0),
                                    Logic_cladding_A, "Physical_cladding_A_down", LogicWorld, false, l, true);
  }
+ // ==========  Optical surface ========== 
+  G4OpticalSurface* op_surface_bar_clad = new G4OpticalSurface("BarCladSurface"); 
+  op_surface_bar_clad->SetType(dielectric_dielectric); 
+  op_surface_bar_clad->SetFinish(polished);
+  op_surface_bar_clad->SetModel(unified);
 
+G4LogicalBorderSurface* border_one = new G4LogicalBorderSurface( "Bar_Clad-Surface_one", Physical_cladding_A, Physical_MID_A, op_surface_bar_clad);
 
 // ====  STEP LIMITS FOR FIBERS A ====
 G4double maxStep = 0.5 * mm;

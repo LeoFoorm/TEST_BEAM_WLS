@@ -18,7 +18,8 @@
 #include "SensitiveDetector.hh"
 #include "G4GenericMessenger.hh" 
 #include "G4OpticalSurface.hh"
-#include "G4LogicalSkinSurface.hh" 
+#include "G4LogicalSkinSurface.hh"
+#include "G4LogicalBorderSurface.hh" 
 #include "G4SubtractionSolid.hh"
 
 #include "G4FieldManager.hh"
