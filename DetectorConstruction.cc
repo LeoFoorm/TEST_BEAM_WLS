@@ -481,7 +481,14 @@ for (G4int l = 0; l < 3; l++)
                                    Logic_cladding_B, "Physical_cladding_B_down", LogicWorld, false, l, true);
  }
 
- 
+  // ==========  Optical surface ========== 
+  /*G4OpticalSurface* op_surface_bar_clad = new G4OpticalSurface("BarCladSurface"); 
+  op_surface_bar_clad->SetType(dielectric_dielectric); 
+  op_surface_bar_clad->SetFinish(polished);
+  op_surface_bar_clad->SetModel(unified);*/ // THIS IS UP
+
+G4LogicalBorderSurface* border_two = new G4LogicalBorderSurface( "Bar_Clad-Surface_two", Physical_cladding_B, Physical_MID_B, op_surface_bar_clad);
+
 
 for (auto& fiberLogic : Logic_Fibers_B) {
       fiberLogic->SetUserLimits(fiberStepLimit);
