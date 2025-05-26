@@ -64,11 +64,13 @@ class DetectorConstruction : public G4VUserDetectorConstruction
    std::vector<G4LogicalVolume*> LogicSiPMs_A;
    std::vector<G4LogicalVolume*> fScoringVolumes_A;
    std::vector<G4LogicalVolume*> Logic_Fibers_A;
+   std::vector<G4LogicalVolume*> Logic_claddings_A;
 
    std::vector<G4LogicalVolume*> LogicBars_B; 
    std::vector<G4LogicalVolume*> LogicSiPMs_B;
    std::vector<G4LogicalVolume*> fScoringVolumes_B;
    std::vector<G4LogicalVolume*> Logic_Fibers_B;
+   std::vector<G4LogicalVolume*> Logic_claddings_B;
 
 
 
@@ -85,7 +87,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 
     G4GenericMessenger *fMessenger;  
 
-    G4Tubs *Solid_fiber;
+    G4Tubs *Solid_fiber, *Solid_cladding;
     G4Box *window;
 
     G4Box  *SolidWorld, *Solidbar, *Solidsipm, *SolidCube,
@@ -100,7 +102,8 @@ class DetectorConstruction : public G4VUserDetectorConstruction
                     *LogicFingerTrigger1, *LogicFingerTrigger2, *Logicmylar_Trigger_1_2,
                     *LogicTrigger_3, *Logicmylar_Trigger_3,
                     *LogicTrigger_4, *Logicmylar_Trigger_4,
-                    *Logic_Fiber_A, *Logic_Fiber_B;
+                    *Logic_Fiber_A, *Logic_Fiber_B,
+                    *Logic_cladding_A, *Logic_cladding_B;
 
     G4VPhysicalVolume *PhysicalWorld, *Physicalbar, *Physicalsipm, *Physicalmylar, *PhysicalSA, *PhysicalCube,
                       *Physical_MID_A, *Physical_SiPM_MID_A, *Physical_Mylar_MID_A, 
@@ -108,7 +111,8 @@ class DetectorConstruction : public G4VUserDetectorConstruction
                       *PhysicalTrigger1, *PhysicalTrigger2, *Physical_Mylar_Trigger1, *Physical_Mylar_Trigger2,
                       *PhysicalTrigger3, *Physical_Mylar_Trigger3,
                       *PhysicalTrigger4, *Physical_Mylar_Trigger4,
-                      *Physical_Fiber_A, *Physical_Fiber_B;
+                      *Physical_Fiber_A, *Physical_Fiber_B,
+                      *Physical_cladding_A, *Physical_cladding_B;
 
 
       G4LogicalVolume *ScoringVolume_Trigger_1, *ScoringVolume_Trigger_2, 
@@ -116,7 +120,9 @@ class DetectorConstruction : public G4VUserDetectorConstruction
     
     void DefineMaterials();
 
-    G4Material *plastic, *worldMaterial, *steel, *mylarMaterial, *fiber_core;
+    G4Material *plastic, *worldMaterial, *steel, *mylarMaterial, *fiber_core, *cladding;
+
+    G4Element *C, *H, *O;
    
     G4OpticalSurface *mirrorsurface; 
   

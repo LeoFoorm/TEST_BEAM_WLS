@@ -131,20 +131,41 @@ void DetectorConstruction::DefineMaterials()
   for(size_t k = 0; k<wavelength_wls.size(); ++k){
     G4cout << k << "(ELEMENTS) Emmision prob: " << EmissionFiber[k]<< "\n";
   }*/
-
-    
   
 
  G4OpticalParameters::Instance()->SetScintFiniteRiseTime(true); 
 
  G4NistManager *nist = G4NistManager::Instance();
+
+   //======== cladding ======================
+  G4String name,symbol;
+  G4double z;
+
+  C = new G4Element(name="Carbon" ,symbol="C" , z= 6., 12.01*g/mole);
+
+  O = new G4Element(name="Oxygen" ,symbol="O" , z= 8., 16.00*g/mole);
+
+  H = new G4Element(name="Hydrogen",symbol="H" , z= 1., 1.01*g/mole);
+
+  cladding = new G4Material("PMMA", 1.19*g/cm3, 3);
+  cladding->AddElement(C,5);
+  cladding->AddElement(O,2);
+  cladding->AddElement(H,8);
+
+  //I will use this PhotonEnergy
+  vector<G4double> RIndexCladding(86, 1.49);
+
+
+  //===========================================
+
  worldMaterial = nist->FindOrBuildMaterial("G4_AIR");
  plastic = nist->FindOrBuildMaterial("G4_PLASTIC_SC_VINYLTOLUENE");
  mylarMaterial = nist->FindOrBuildMaterial("G4_MYLAR");
  steel = nist->FindOrBuildMaterial("G4_Fe");
 
- //WLS CHARATERISTICS - CORE: (PS)
+ //=================== WLS CHARATERISTICS / CORE (PS) ===================
  fiber_core = nist->FindOrBuildMaterial("G4_POLYSTYRENE");
+
 
  mirrorsurface = new G4OpticalSurface("mirrorsurface");
 
@@ -158,6 +179,7 @@ void DetectorConstruction::DefineMaterials()
  G4MaterialPropertiesTable *propmylar=new G4MaterialPropertiesTable();
 
 G4MaterialPropertiesTable *propfiber=new G4MaterialPropertiesTable();
+G4MaterialPropertiesTable *propcladding=new G4MaterialPropertiesTable();
  
 
  propworld->AddProperty("RINDEX",energy, rindexWorld,numberOfEntries);
@@ -176,6 +198,7 @@ propfiber->AddProperty("RINDEX", PhotonEnergy, RIndexFiber, numOfEnt2);
 propfiber->AddProperty("WLSABSLENGTH", PhotonEnergy, AbsFiber, numOfEnt2);
 propfiber->AddProperty("WLSCOMPONENT", PhotonEnergy, EmissionFiber, numOfEnt2);
 propfiber->AddConstProperty("WLSTIMECONSTANT", 1.0*ns);
+propcladding->AddProperty("RINDEX", PhotonEnergy, RIndexCladding, numOfEnt2);
 
 // ========== PEAKS ========== 
 propfiber->AddConstProperty("WLSABSLENGTHMAX", 2.883657674*eV, true); // Absorption peak
@@ -188,6 +211,7 @@ propfiber->AddConstProperty("WLSCOMPONENTMAX", 2.604984874*eV, true); // Emissio
  mylarMaterial->SetMaterialPropertiesTable(propmylar);
 
 fiber_core->SetMaterialPropertiesTable(propfiber);
+cladding->SetMaterialPropertiesTable(propcladding);
 
 }
 
@@ -242,7 +266,7 @@ G4SubtractionSolid* Mylar_With_Hole = new G4SubtractionSolid("Mylar_With_Hole", 
 
 //                      FIBER
   G4double innerRadius = 0.*cm;
-  G4double outerRadius = 0.05*cm; // 1 mm diameter, 0.5 mm radius.
+  G4double outerRadius = 0.049*cm; // 1 mm diameter, 0.5 mm radius. Core 0.098 cm half core 0.049 cm 
   G4double hz = 50.*cm;
   G4double startAngle = 0.*deg;
   G4double spanningAngle = 360.*deg;
@@ -250,6 +274,14 @@ G4SubtractionSolid* Mylar_With_Hole = new G4SubtractionSolid("Mylar_With_Hole", 
  Solid_fiber = new G4Tubs("FIBER", innerRadius, outerRadius, hz, startAngle, spanningAngle);
 
 
+//                      CLADDING
+  G4double innerR_clad = 0.049*cm;
+  G4double outerR_clad = 0.05*cm; //, 0.5 mm radius. Core 0.098 cm half core 0.049 cm. Cladding 0.02mm
+  G4double hz_clad = 50.*cm;
+  G4double startAngle_clad = 0.*deg;
+  G4double spanningAngle_clad = 360.*deg;
+
+ Solid_cladding = new G4Tubs("CLADDING", innerR_clad, outerR_clad, hz_clad, startAngle_clad, spanningAngle_clad);
 
 //----------------  2 SCINTILLATION BARS A  ---------------- 
   
@@ -312,6 +344,34 @@ for (G4int l = 0; l < 2; l++)
   Physical_Fiber_A = new  G4PVPlacement(0, G4ThreeVector(-5.05 * cm + (5.102*l) * cm, - 0.1 * cm, 0),
                                    Logic_Fiber_A, "Physical_Fiber_A_down", LogicWorld, false, l, true);
  }
+
+ //          6 CLADDING A
+
+ for (G4int l = 0; l < 2; l++)
+ {
+  Logic_cladding_A= new G4LogicalVolume(Solid_cladding, cladding, "Logic_cladding_A_"+std::to_string(l));
+  Logic_claddings_A.push_back(Logic_cladding_A);
+
+  Physical_cladding_A = new  G4PVPlacement(0, G4ThreeVector(-5.05 * cm + (5.102*l) * cm, 0, 0),
+                                   Logic_cladding_A, "Physical_cladding_A_middle", LogicWorld, false, l, true);
+ }
+ for (G4int l = 0; l < 2; l++)
+ {
+  Logic_cladding_A= new G4LogicalVolume(Solid_cladding, cladding, "Logic_cladding_A_"+std::to_string(l));
+  Logic_claddings_A.push_back(Logic_cladding_A);
+
+  Physical_cladding_A = new  G4PVPlacement(0, G4ThreeVector(-5.05 * cm + (5.102*l) * cm, 0.1 * cm, 0),
+                                   Logic_cladding_A, "Physical_cladding_A_up", LogicWorld, false, l, true);
+ }
+ for (G4int l = 0; l < 2; l++)
+ {
+  Logic_cladding_A= new G4LogicalVolume(Solid_cladding, cladding, "Logic_cladding_A_"+std::to_string(l));
+  Logic_claddings_A.push_back(Logic_cladding_A);
+
+  Physical_cladding_A = new  G4PVPlacement(0, G4ThreeVector(-5.05 * cm + (5.102*l) * cm, - 0.1 * cm, 0),
+                                   Logic_cladding_A, "Physical_cladding_A_down", LogicWorld, false, l, true);
+ }
+
 
 // ====  STEP LIMITS FOR FIBERS A ====
 G4double maxStep = 0.5 * mm;
@@ -386,6 +446,37 @@ for (G4int l = 0; l < 3; l++)
                                    Logic_Fiber_B, "Physical_Fiber_B_down", LogicWorld, false, l, true);
  }
 
+//          9 CLADDING B
+
+ for (G4int l = 0; l < 3; l++)
+ {
+  Logic_cladding_B= new G4LogicalVolume(Solid_cladding, cladding, "Logic_cladding_B_"+std::to_string(l));
+  Logic_claddings_B.push_back(Logic_cladding_B);
+
+  Physical_cladding_B = new  G4PVPlacement(rotationY, G4ThreeVector( 0, distance_modules,  -7.602 * cm + (5.102*l) * cm),
+                                   Logic_cladding_B, "Physical_cladding_B_middle", LogicWorld, false, l+2, true);
+ }
+
+ for (G4int l = 0; l < 3; l++)
+ {
+  Logic_cladding_B= new G4LogicalVolume(Solid_cladding, cladding, "Logic_cladding_B_"+std::to_string(l));
+  Logic_claddings_B.push_back(Logic_cladding_B);
+
+  Physical_cladding_B = new  G4PVPlacement(rotationY, G4ThreeVector(0, distance_modules + 0.1 * cm,  -7.602 * cm + (5.102*l) * cm),
+                                   Logic_cladding_B, "Physical_cladding_B_up", LogicWorld, false, l, true);
+ }
+
+ for (G4int l = 0; l < 3; l++)
+ {
+  Logic_cladding_B= new G4LogicalVolume(Solid_cladding, cladding, "Logic_cladding_B_"+std::to_string(l));
+  Logic_claddings_B.push_back(Logic_cladding_B);
+
+  Physical_cladding_B = new  G4PVPlacement(rotationY, G4ThreeVector(0, distance_modules - 0.1 * cm,  -7.602 * cm + (5.102*l) * cm),
+                                   Logic_cladding_B, "Physical_cladding_B_down", LogicWorld, false, l, true);
+ }
+
+ 
+
 for (auto& fiberLogic : Logic_Fibers_B) {
       fiberLogic->SetUserLimits(fiberStepLimit);
      }
@@ -394,9 +485,9 @@ for (auto& fiberLogic : Logic_Fibers_B) {
 
   //---------------  STEEL-ABSORBER  ---------------
 
-  G4double SA_X = 50*cm;
+  G4double SA_X = 30*cm;
   G4double SA_Y = 30*cm;
-  G4double SA_Z = 50*cm;
+  G4double SA_Z = 30*cm;
 
   G4ThreeVector  positionSA = G4ThreeVector(0, 138.86*cm, 0);
 
