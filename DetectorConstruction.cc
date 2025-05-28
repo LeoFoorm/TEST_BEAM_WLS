@@ -375,13 +375,13 @@ for (G4int l = 0; l < 2; l++)
   op_surface_bar_clad->SetModel(unified);
   G4LogicalBorderSurface* border_clad_bar_A = new G4LogicalBorderSurface( "Border_clad_bar_A", Physical_cladding_A, Physical_MID_A, op_surface_bar_clad);
 
-// ====  STEP LIMITS FOR FIBERS A ====
+// ====================  STEP LIMITS FOR FIBERS A ===============================
 G4double maxStep = 0.5 * mm;
 G4UserLimits* fiberStepLimit = new G4UserLimits(maxStep);
 for (auto& fiberLogic : Logic_Fibers_A) {
     fiberLogic->SetUserLimits(fiberStepLimit);
 }
-// ===================================
+// =============================================================================
 
 
 
