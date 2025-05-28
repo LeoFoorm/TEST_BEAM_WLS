@@ -59,20 +59,20 @@ G4TouchableHandle touchedbar = step->GetPreStepPoint()->GetTouchableHandle();
                << "volume=" << track->GetVolume()->GetName()
                << G4endl;*/
 
-        if (track->GetCurrentStepNumber() > 1000) {
+        if (track->GetCurrentStepNumber() > 1000 || track->GetTrackLength() > 10*m) {
             track->SetTrackStatus(fStopAndKill); // kill stuck photon
             return; // Salir inmediatamente del método para evitar trabajo innecesario
         }
 
-      G4StepPoint *PostStep = step->GetPostStepPoint();
-      G4LogicalVolume* postLogical = PostStep->GetTouchableHandle()->GetVolume()->GetLogicalVolume();
+      //G4StepPoint *PostStep = step->GetPostStepPoint();
+      //G4LogicalVolume* postLogical = PostStep->GetTouchableHandle()->GetVolume()->GetLogicalVolume();
 
-      if (std::find(Logic_Fibers_A.begin(), Logic_Fibers_A.end(), postLogical) != Logic_Fibers_A.end() ||
+      /*if (std::find(Logic_Fibers_A.begin(), Logic_Fibers_A.end(), postLogical) != Logic_Fibers_A.end() ||
         std::find(Logic_Fibers_B.begin(), Logic_Fibers_B.end(), postLogical) != Logic_Fibers_B.end()) {
 
         G4cout << "Photon entered fiber core at position: "
                << PostStep->GetPosition()/cm << " cm" << G4endl;
-    }
+    }*/
     }
 
 
