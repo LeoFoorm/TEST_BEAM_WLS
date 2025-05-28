@@ -73,6 +73,8 @@ class DetectorConstruction : public G4VUserDetectorConstruction
    std::vector<G4LogicalVolume*> Logic_Fibers_B;
    std::vector<G4LogicalVolume*> Logic_claddings_B;
 
+   const vector<G4LogicalVolume*>& GetFibersVolumesA() const {return Logic_Fibers_A;}
+   const vector<G4LogicalVolume*>& GetFibersVolumesB() const {return Logic_Fibers_B;}
 
 
     G4double wavelength, lightOutput;
@@ -125,7 +127,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 
     G4Element *C, *H, *O;
    
-    G4OpticalSurface *mirrorsurface; 
+    G4OpticalSurface *mirrorsurface, *op_surface_bar_clad, *op_surface_core_clad, *op_surface_clad_air, *op_surface_bar_air; 
   
 };
 

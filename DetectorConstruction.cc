@@ -84,7 +84,7 @@ void DetectorConstruction::DefineMaterials()
 
   for(size_t j = 0; j< wavelength_wls.size(); ++j){
     //G4double energy_wls = 1.239841939 * eV / (wavelength[j] / 1000); // IS THIS RIGHT?
-    G4double energy_wls = ( 1.2399728 )/ (wavelength_wls[j]/1000); 
+    G4double energy_wls = ( 1.2399728 * eV)/ (wavelength_wls[j]/1000); 
     PhotonEnergy.push_back(energy_wls);
   }
   G4int numOfEnt2 = PhotonEnergy.size();
@@ -99,20 +99,6 @@ void DetectorConstruction::DefineMaterials()
    EmissionFiber.insert(EmissionFiber.end(), 11, 0.8); //<--
    EmissionFiber.insert(EmissionFiber.end(), 40, 0.02); //<--
 
-
-  /*vector<G4double> EmissionFiber(17, 2.0);
-   EmissionFiber.insert(EmissionFiber.end(), 18, 5.0);
-   EmissionFiber.insert(EmissionFiber.end(), 11, 8.0); //<--
-   EmissionFiber.insert(EmissionFiber.end(), 40, 0.2); //<--*/
-// =================================
-
-  /*vector<G4double> AbsFiber (40, 0.01*m);
-   AbsFiber.insert(AbsFiber.end(), 45, 3.51*m);
-      
-  vector<G4double> EmissionFiber(40, 0.0);
-   EmissionFiber.insert(EmissionFiber.end(), 11, 10.0);
-   EmissionFiber.insert(EmissionFiber.end(), 17, 5.0); //<--
-   EmissionFiber.insert(EmissionFiber.end(), 17, 2.0); //<--*/
 
   /*G4cout << "(SIZE) PhotonEnergy: " << PhotonEnergy.size() << G4endl;
   G4cout << "(SIZE) RIndex : " << RIndexFiber.size() << "\n";
@@ -166,11 +152,12 @@ void DetectorConstruction::DefineMaterials()
  //=================== WLS CHARATERISTICS / CORE (PS) ===================
  fiber_core = nist->FindOrBuildMaterial("G4_POLYSTYRENE");
 
-
+//=============== OPTICAL SURFACE (MYLAR-REFLECTIVITY) ========================================
  mirrorsurface = new G4OpticalSurface("mirrorsurface");
  mirrorsurface->SetType(dielectric_dielectric);
  mirrorsurface->SetFinish(polishedfrontpainted);
  mirrorsurface->SetModel(unified);
+ //=====================================================================
 
  G4MaterialPropertiesTable *mirror=new G4MaterialPropertiesTable();
  G4MaterialPropertiesTable *prop=new G4MaterialPropertiesTable();
@@ -260,7 +247,9 @@ G4SubtractionSolid* Mylar_With_Hole = new G4SubtractionSolid("Mylar_With_Hole", 
 
 //Logicmylar = new G4LogicalVolume(hollowMylarBox, mylarMaterial, "Logicmylar");
  Logicmylar = new G4LogicalVolume(Mylar_With_Hole, mylarMaterial, "Logicmylar");
+
  G4LogicalSkinSurface *skin= new G4LogicalSkinSurface("skin", Logicmylar, mirrorsurface); 
+ //=====================================================================
 
 
 //                      FIBER
@@ -370,13 +359,21 @@ for (G4int l = 0; l < 2; l++)
   Physical_cladding_A = new  G4PVPlacement(0, G4ThreeVector(-5.05 * cm + (5.102*l) * cm, - 0.1 * cm, 0),
                                    Logic_cladding_A, "Physical_cladding_A_down", LogicWorld, false, l, true);
  }
- // ==========  Optical surface ========== 
-  G4OpticalSurface* op_surface_bar_clad = new G4OpticalSurface("BarCladSurface"); 
+
+
+ // ==========  Optical surface  (CORE-CLADDING) ========== 
+ op_surface_core_clad = new G4OpticalSurface("CoreCladSurface");
+ op_surface_core_clad->SetType(dielectric_dielectric); 
+ op_surface_core_clad->SetFinish(polished);
+ op_surface_core_clad->SetModel(unified);
+ G4LogicalBorderSurface* border_clad_core_A = new G4LogicalBorderSurface( "Border_clad_core_A", Physical_cladding_A, Physical_Fiber_A, op_surface_core_clad);
+
+ // ==========  Optical surface (CLADDING-BAR) ========== 
+  op_surface_bar_clad = new G4OpticalSurface("BarCladSurface"); 
   op_surface_bar_clad->SetType(dielectric_dielectric); 
   op_surface_bar_clad->SetFinish(ground);
   op_surface_bar_clad->SetModel(unified);
-
-G4LogicalBorderSurface* border_one = new G4LogicalBorderSurface( "Bar_Clad-Surface_one", Physical_cladding_A, Physical_MID_A, op_surface_bar_clad);
+  G4LogicalBorderSurface* border_clad_bar_A = new G4LogicalBorderSurface( "Border_clad_bar_A", Physical_cladding_A, Physical_MID_A, op_surface_bar_clad);
 
 // ====  STEP LIMITS FOR FIBERS A ====
 G4double maxStep = 0.5 * mm;
@@ -487,7 +484,8 @@ for (G4int l = 0; l < 3; l++)
   op_surface_bar_clad->SetModel(unified);*/ // THIS IS UP
 
 
-G4LogicalBorderSurface* border_two = new G4LogicalBorderSurface( "Bar_Clad-Surface_two", Physical_cladding_B, Physical_MID_B, op_surface_bar_clad);
+G4LogicalBorderSurface* border_clad_bar_B = new G4LogicalBorderSurface( "Border_clad_bar_B", Physical_cladding_B, Physical_MID_B, op_surface_bar_clad);
+G4LogicalBorderSurface* border_clad_core_B = new G4LogicalBorderSurface( "Border_clad_core_B", Physical_cladding_B, Physical_Fiber_B, op_surface_core_clad);
 
 for (auto& fiberLogic : Logic_Fibers_B) {
       fiberLogic->SetUserLimits(fiberStepLimit);
@@ -643,6 +641,23 @@ G4VPhysicalVolume *DetectorConstruction::Construct()
    ConstructTESTBEAM(); 
 
   return PhysicalWorld; 
+
+// ==========  Optical surface (CLADDING - AIR for A & B) ========== 
+ op_surface_clad_air = new G4OpticalSurface("CladAirSurface");
+ op_surface_clad_air->SetType(dielectric_dielectric); 
+ op_surface_clad_air->SetFinish(polished);
+ op_surface_clad_air->SetModel(unified);
+ G4LogicalBorderSurface* border_clad_air_A = new G4LogicalBorderSurface( "Border_clad_air_A", Physical_cladding_A, PhysicalWorld, op_surface_clad_air);
+ G4LogicalBorderSurface* border_clad_air_B = new G4LogicalBorderSurface( "Border_clad_air_A", Physical_cladding_B, PhysicalWorld, op_surface_clad_air);
+
+// ==========  Optical surface (BAR - AIR for A & B) ========== 
+ op_surface_bar_air = new G4OpticalSurface("BarAirSurface");
+ op_surface_bar_air->SetType(dielectric_dielectric); 
+ op_surface_bar_air->SetFinish(polished);
+ op_surface_bar_air->SetModel(unified);
+ G4LogicalBorderSurface* border_bar_air_A = new G4LogicalBorderSurface( "Border_bar_air_A", Physical_MID_A, PhysicalWorld, op_surface_bar_air);
+ G4LogicalBorderSurface* border_bar_air_B = new G4LogicalBorderSurface( "Border_bar_air_A", Physical_MID_B, PhysicalWorld, op_surface_bar_air);
+
 }
 
 

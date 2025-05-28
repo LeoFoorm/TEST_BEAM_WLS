@@ -29,7 +29,9 @@ G4LogicalVolume *ScoringVolume_Trigger_1 = detectorconstruction->GetScoringVolum
 G4LogicalVolume *ScoringVolume_Trigger_2 = detectorconstruction->GetScoringVolumeT2();
 G4LogicalVolume *ScoringVolume_Trigger_3 = detectorconstruction->GetScoringVolumeT3();
 G4LogicalVolume *ScoringVolume_Trigger_4 = detectorconstruction->GetScoringVolumeT4();
-   
+
+const vector<G4LogicalVolume*>& Logic_Fibers_A = detectorconstruction->GetFibersVolumesA();
+const vector<G4LogicalVolume*>& Logic_Fibers_B = detectorconstruction->GetFibersVolumesB();
 
 G4TouchableHandle touchedbar = step->GetPreStepPoint()->GetTouchableHandle(); 
  G4LogicalVolume* barvolume = touchedbar->GetVolume()->GetLogicalVolume();
@@ -49,11 +51,46 @@ G4TouchableHandle touchedbar = step->GetPreStepPoint()->GetTouchableHandle();
 //================= KILING PHOTONS =====================
 // MATAR FOTONES ÓPTICOS TRAPADOS (> 1000 pasos)
     if (particle == G4OpticalPhoton::OpticalPhotonDefinition()) {
+
+      /*G4cout << "Step #" << track->GetCurrentStepNumber()
+               << ", pos=(" << track->GetPosition().x()/cm << " cm, "
+                            << track->GetPosition().y()/cm << " cm, "
+                            << track->GetPosition().z()/cm << " cm), "
+               << "volume=" << track->GetVolume()->GetName()
+               << G4endl;*/
+
         if (track->GetCurrentStepNumber() > 1000) {
             track->SetTrackStatus(fStopAndKill); // kill stuck photon
             return; // Salir inmediatamente del método para evitar trabajo innecesario
         }
+
+      G4StepPoint *PostStep = step->GetPostStepPoint();
+      G4LogicalVolume* postLogical = PostStep->GetTouchableHandle()->GetVolume()->GetLogicalVolume();
+
+      if (std::find(Logic_Fibers_A.begin(), Logic_Fibers_A.end(), postLogical) != Logic_Fibers_A.end() ||
+        std::find(Logic_Fibers_B.begin(), Logic_Fibers_B.end(), postLogical) != Logic_Fibers_B.end()) {
+
+        G4cout << "Photon entered fiber core at position: "
+               << PostStep->GetPosition()/cm << " cm" << G4endl;
     }
+    }
+
+
+   /*if (particle != G4OpticalPhoton::OpticalPhotonDefinition()) {
+    return;
+      
+
+      G4StepPoint *PostStep = step->GetPostStepPoint();
+      G4LogicalVolume* postLogical = PostStep->GetTouchableHandle()->GetVolume()->GetLogicalVolume();
+
+      if (std::find(Logic_Fibers_A.begin(), Logic_Fibers_A.end(), postLogical) != Logic_Fibers_A.end() ||
+        std::find(Logic_Fibers_B.begin(), Logic_Fibers_B.end(), postLogical) != Logic_Fibers_B.end()) {
+
+        G4cout << "Photon entered fiber core at position: "
+               << PostStep->GetPosition()/cm << " cm" << G4endl;
+    }
+
+   }*/
 
 
   //Verify WLS worked:

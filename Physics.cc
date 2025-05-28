@@ -35,8 +35,8 @@ PhysicsList::PhysicsList()
 
     G4UImanager* uiManager = G4UImanager::GetUIpointer();
     uiManager->ApplyCommand("/optics/trackSecondariesFirst false");
-    uiManager->ApplyCommand("/optics/maxNumPhotonsPerStep -1");
-    uiManager->ApplyCommand("/optical/verbose 1");
+    uiManager->ApplyCommand("/optics/maxNumPhotonsPerStep 90");
+    //uiManager->ApplyCommand("/optical/verbose 1");
 
 
     // Configure optical processes using G4OpticalParameters
@@ -46,6 +46,7 @@ PhysicsList::PhysicsList()
     opticalParams->SetProcessActivation("OpBoundary", true);      // Enable boundary processes
 	opticalParams->SetProcessActivation("OpWLS", true);			  // Enable WLS processes
 	opticalParams->SetWLSTimeProfile("delta"); // o "exponential"
+    //opticalParams->SetVerboseLevel(2);
 
 
     //opticalParams->SetScintTrackSecondariesFirst(false);
@@ -56,20 +57,14 @@ PhysicsList::PhysicsList()
 
     // ===================================================================
 
-    // Disable tracking secondaries first for optical photons
-    /*opticalParams->SetTrackSecondariesFirst(kOpticalPhoton, false);
-    
-    // Limit number of optical photons generated per step
-    opticalParams->SetMaxNumPhotonsPerStep(100);*/
-
 
     /*opticalParams->SetScintTrackSecondariesFirst(false);
     opticalParams->SetCerenkovMaxPhotonsPerStep(100);
     opticalParams->SetCerenkovMaxBetaChange(10.0);
-    opticalParams->SetScinStackPhotons(false);
-    opticalParams->SetVerboseLevel();*/
+    opticalParams->SetScinStackPhotons(false);*/
 
 }
 
 PhysicsList::~PhysicsList()
 {}
+
