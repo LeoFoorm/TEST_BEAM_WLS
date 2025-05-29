@@ -376,7 +376,7 @@ for (G4int l = 0; l < 2; l++)
   G4LogicalBorderSurface* border_clad_bar_A = new G4LogicalBorderSurface( "Border_clad_bar_A", Physical_cladding_A, Physical_MID_A, op_surface_bar_clad);
 
 // ====================  STEP LIMITS FOR FIBERS A ===============================
-G4double maxStep = 0.5 * mm;
+G4double maxStep = 0.1 * mm;
 G4UserLimits* fiberStepLimit = new G4UserLimits(maxStep);
 for (auto& fiberLogic : Logic_Fibers_A) {
     fiberLogic->SetUserLimits(fiberStepLimit);
@@ -675,11 +675,11 @@ void DetectorConstruction::ConstructSDandField()
     }
   
 
-  G4MagneticField *magField;
-  G4ThreeVector BField = G4ThreeVector(0., 0., 5.0 *kilogauss);
-  magField = new G4UniformMagField(BField);
+  //G4MagneticField *magField;
+  //G4ThreeVector BField = G4ThreeVector(0., 0., 5.0 *kilogauss);
+  //magField = new G4UniformMagField(BField);
 
-  G4FieldManager* FieldMngr = new G4FieldManager(magField);
+  //G4FieldManager* FieldMngr = new G4FieldManager(magField);
   //FieldMngr->SetDetectorField(magField);
   //FieldMngr->CreateChordFinder(magField);
   //LogicCube->SetFieldManager(FieldMngr,true); 

@@ -35,7 +35,7 @@ PhysicsList::PhysicsList()
 
     G4UImanager* uiManager = G4UImanager::GetUIpointer();
     uiManager->ApplyCommand("/optics/trackSecondariesFirst false");
-    uiManager->ApplyCommand("/optics/maxNumPhotonsPerStep 90");
+    uiManager->ApplyCommand("/optics/maxNumPhotonsPerStep -1");
     //uiManager->ApplyCommand("/optical/verbose 1");
 
 

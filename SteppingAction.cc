@@ -58,8 +58,8 @@ G4TouchableHandle touchedbar = step->GetPreStepPoint()->GetTouchableHandle();
                             << track->GetPosition().z()/cm << " cm), "
                << "volume=" << track->GetVolume()->GetName()
                << G4endl;*/
-
-        if (track->GetCurrentStepNumber() > 1000 || track->GetTrackLength() > 10*m) {
+            //track->GetCurrentStepNumber() > 1000 ||
+        if ( track->GetTrackLength() > 100*m) {
             track->SetTrackStatus(fStopAndKill); // kill stuck photon
             return; // Salir inmediatamente del método para evitar trabajo innecesario
         }
