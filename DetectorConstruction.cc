@@ -78,8 +78,54 @@ void DetectorConstruction::DefineMaterials()
 
 
   // ======= REQUIRED DATA FOR WLS =======
+std::vector<G4double> energy_test = {
+    2.00 * eV, 2.03 * eV, 2.06 * eV, 2.09 * eV, 2.12 * eV, 2.15 * eV, 2.18 * eV,
+    2.21 * eV, 2.24 * eV, 2.27 * eV, 2.30 * eV, 2.33 * eV, 2.36 * eV, 2.39 * eV,
+    2.42 * eV, 2.45 * eV, 2.48 * eV, 2.51 * eV, 2.54 * eV, 2.57 * eV, 2.60 * eV,
+    2.63 * eV, 2.66 * eV, 2.69 * eV, 2.72 * eV, 2.75 * eV, 2.78 * eV, 2.81 * eV,
+    2.84 * eV, 2.87 * eV, 2.90 * eV, 2.93 * eV, 2.96 * eV, 2.99 * eV, 3.02 * eV,
+    3.05 * eV, 3.08 * eV, 3.11 * eV, 3.14 * eV, 3.17 * eV, 3.20 * eV, 3.23 * eV,
+    3.26 * eV, 3.29 * eV, 3.32 * eV, 3.35 * eV, 3.38 * eV, 3.41 * eV, 3.44 * eV,
+    3.47 * eV
+  };
 
-  vector<G4double> wavelength_wls = {550.02, 549.98, 548.49, 547.07, 546.86, 545.44, 544.51, 543.31, 542.32, 541.38, 540.26, 538.04, 537.59, 536.95, 535.00, 532.16, 530.67, 528.30, 527.21, 526.37, 525.08, 524.47, 523.50, 522.50, 521.56, 520.19, 518.93, 517.11, 516.07, 515.64, 513.88, 512.76, 511.53, 510.19, 508.43, 505.02, 503.76, 501.05, 500.01, 499.83, 496.62, 491.92, 487.22, 482.51, 476, 473.10, 468.40, 463.69, 458.99, 454.28, 449.58, 445.30, 441.45, 438.03, 434.18, 430, 429.69, 425.20, 417.03, 415.36, 414.08, 413.22, 412.53, 411.60, 410.66, 409.80, 408.53, 405.80, 402.75, 400.18, 399.32, 397.27, 396.33, 395.48, 394.62, 394.28, 392.91, 392.27, 391.41, 390.34, 389.70, 388.42, 386.63, 384.57, 381.58, 380.31};
+  std::vector<G4double> energySmall = { 2.0 * eV, 3.47 * eV };
+
+   std::vector<G4double> RIndexFiber = { 1.60, 1.60 };
+
+  std::vector<G4double> AbsFiber = {
+    /*3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m,
+    3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m,
+    3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m,
+    3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m,
+    3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m,
+    3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m,
+    3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m,
+    3.60 * m*/
+    5.40 * m, 5.40 * m, 5.40 * m, 5.40 * m, 5.40 * m, 5.40 * m, 5.40 * m,
+    5.40 * m, 5.40 * m, 5.40 * m, 5.40 * m, 5.40 * m, 5.40 * m, 5.40 * m,
+    5.40 * m, 5.40 * m, 5.40 * m, 5.40 * m, 5.40 * m, 5.40 * m, 5.40 * m,
+    5.40 * m, 5.40 * m, 5.40 * m, 5.40 * m, 5.40 * m, 5.40 * m, 5.40 * m,
+    5.40 * m, 1.10 * m, 1.10 * m, 1.10 * m, 1.10 * m, 1.10 * m, 1.10 * m,
+    1.10 * m, 1. * mm,  1. * mm,  1. * mm,  1. * mm,  1. * mm,  1. * mm,
+    1. * mm,  1. * mm,  1. * mm,  1. * mm,  1. * mm,  1. * mm,  1. * mm,
+    1. * mm
+  };
+
+  std::vector<G4double> EmissionFiber = {
+    0.05, 0.10, 0.30, 0.50, 0.75, 1.00, 1.50, 1.85, 2.30, 2.75,
+    3.25, 3.80, 4.50, 5.20, 6.00, 7.00, 13.50, 14.70, 15.1, 17.00,
+    16.9, 16.0, 7.8, 6.3, 4.1, 3.0, 2.0, 1.0, 1.0, 0.9,
+    0.1, 1.00, 1.50, 1.00, 0.05, 0.00, 0.00, 0.00, 0.00, 0.00,
+    0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00
+    /*0.05, 0.10, 0.30, 0.50, 0.75, 1.00, 1.50, 1.85, 2.30, 3.00,
+    3.25, 3.80, 4.50, 5.20, 6.00, 17.00, 16.90, 16.70, 16.50, 17.00,
+    17.00, 14.0, 0.05, 0.03, 0.01, 0.01, 12.0, 0.01, 0.01, 0.09,
+    0.01, 0.0, 0.05, 0.01, 0.05, 0.00, 0.00, 0.00, 0.00, 0.00,
+    0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00*/
+  };
+
+  /*vector<G4double> wavelength_wls = {550.02, 549.98, 548.49, 547.07, 546.86, 545.44, 544.51, 543.31, 542.32, 541.38, 540.26, 538.04, 537.59, 536.95, 535.00, 532.16, 530.67, 528.30, 527.21, 526.37, 525.08, 524.47, 523.50, 522.50, 521.56, 520.19, 518.93, 517.11, 516.07, 515.64, 513.88, 512.76, 511.53, 510.19, 508.43, 505.02, 503.76, 501.05, 500.01, 499.83, 496.62, 491.92, 487.22, 482.51, 476, 473.10, 468.40, 463.69, 458.99, 454.28, 449.58, 445.30, 441.45, 438.03, 434.18, 430, 429.69, 425.20, 417.03, 415.36, 414.08, 413.22, 412.53, 411.60, 410.66, 409.80, 408.53, 405.80, 402.75, 400.18, 399.32, 397.27, 396.33, 395.48, 394.62, 394.28, 392.91, 392.27, 391.41, 390.34, 389.70, 388.42, 386.63, 384.57, 381.58, 380.31};
     vector<G4double> PhotonEnergy;
 
   for(size_t j = 0; j< wavelength_wls.size(); ++j){
@@ -97,7 +143,7 @@ void DetectorConstruction::DefineMaterials()
   vector<G4double> EmissionFiber(17, 0.2);
    EmissionFiber.insert(EmissionFiber.end(), 18, 0.5);
    EmissionFiber.insert(EmissionFiber.end(), 11, 0.8); //<--
-   EmissionFiber.insert(EmissionFiber.end(), 40, 0.02); //<--
+   EmissionFiber.insert(EmissionFiber.end(), 40, 0.02); //<--*/
 
 
   /*G4cout << "(SIZE) PhotonEnergy: " << PhotonEnergy.size() << G4endl;
@@ -106,9 +152,9 @@ void DetectorConstruction::DefineMaterials()
   G4cout << "(SIZE) Emmision prob: " << EmissionFiber.size() << "\n";*/
 
 
-  for(size_t k = 0; k<wavelength_wls.size(); ++k){
+  /*for(size_t k = 0; k<wavelength_wls.size(); ++k){
     G4cout << k << "(ELEMENTS) Photon Energy : " << PhotonEnergy[k] << " eV  \n";
-  }
+  }*/
 
   /*for(size_t k = 0; k<wavelength_wls.size(); ++k){
     G4cout << k << "(ELEMENTS) Absortion length: " << AbsFiber[k]/m<< "\n";
@@ -139,7 +185,8 @@ void DetectorConstruction::DefineMaterials()
   cladding->AddElement(H,8);
 
   //I will use this PhotonEnergy
-  vector<G4double> RIndexCladding(86, 1.49);
+   vector<G4double> RIndexCladding = {1.49, 1.49};
+  std::vector<G4double> absClad = { 20.0 * m, 20.0 * m };
 
 
   //===========================================
@@ -180,15 +227,16 @@ G4MaterialPropertiesTable *propcladding=new G4MaterialPropertiesTable();
  propmylar->AddProperty("RINDEX",energy, rindexmylar,numberOfEntries);
 
 
-propfiber->AddProperty("RINDEX", PhotonEnergy, RIndexFiber, numOfEnt2);
-propfiber->AddProperty("WLSABSLENGTH", PhotonEnergy, AbsFiber, numOfEnt2);
-propfiber->AddProperty("WLSCOMPONENT", PhotonEnergy, EmissionFiber, numOfEnt2);
-propfiber->AddConstProperty("WLSTIMECONSTANT", 1.0*ns);
-propcladding->AddProperty("RINDEX", PhotonEnergy, RIndexCladding, numOfEnt2);
+propfiber->AddProperty("RINDEX", energySmall, RIndexFiber);
+propfiber->AddProperty("WLSABSLENGTH", energy_test, AbsFiber);
+propfiber->AddProperty("WLSCOMPONENT", energy_test, EmissionFiber );
+propfiber->AddConstProperty("WLSTIMECONSTANT", 0.5*ns);
+propcladding->AddProperty("RINDEX", energySmall, RIndexCladding);
+propcladding->AddProperty("ABSLENGTH", energySmall, absClad);
 
 // ========== PEAKS ========== 
-propfiber->AddConstProperty("WLSABSLENGTHMAX", 2.883657674*eV, true); // Absorption peak
-propfiber->AddConstProperty("WLSCOMPONENTMAX", 2.604984874*eV, true); // Emission peak
+//propfiber->AddConstProperty("WLSABSLENGTHMAX", 2.883657674*eV, true); // Absorption peak
+//propfiber->AddConstProperty("WLSCOMPONENTMAX", 2.604984874*eV, true); // Emission peak
 
 
  worldMaterial->SetMaterialPropertiesTable(propworld);
@@ -365,14 +413,14 @@ for (G4int l = 0; l < 2; l++)
  op_surface_core_clad = new G4OpticalSurface("CoreCladSurface");
  op_surface_core_clad->SetType(dielectric_dielectric); 
  op_surface_core_clad->SetFinish(polished);
- op_surface_core_clad->SetModel(unified);
+ op_surface_core_clad->SetModel(glisur);
  G4LogicalBorderSurface* border_clad_core_A = new G4LogicalBorderSurface( "Border_clad_core_A", Physical_cladding_A, Physical_Fiber_A, op_surface_core_clad);
 
  // ==========  Optical surface (CLADDING-BAR) ========== 
   op_surface_bar_clad = new G4OpticalSurface("BarCladSurface"); 
   op_surface_bar_clad->SetType(dielectric_dielectric); 
-  op_surface_bar_clad->SetFinish(ground);
-  op_surface_bar_clad->SetModel(unified);
+  op_surface_bar_clad->SetFinish(polished);
+  op_surface_bar_clad->SetModel(glisur);
   G4LogicalBorderSurface* border_clad_bar_A = new G4LogicalBorderSurface( "Border_clad_bar_A", Physical_cladding_A, Physical_MID_A, op_surface_bar_clad);
 
 // ====================  STEP LIMITS FOR FIBERS A ===============================
@@ -645,16 +693,16 @@ G4VPhysicalVolume *DetectorConstruction::Construct()
 // ==========  Optical surface (CLADDING - AIR for A & B) ========== 
  op_surface_clad_air = new G4OpticalSurface("CladAirSurface");
  op_surface_clad_air->SetType(dielectric_dielectric); 
- op_surface_clad_air->SetFinish(polished);
- op_surface_clad_air->SetModel(unified);
+ op_surface_clad_air->SetFinish(ground);
+ op_surface_clad_air->SetModel(glisur);
  G4LogicalBorderSurface* border_clad_air_A = new G4LogicalBorderSurface( "Border_clad_air_A", Physical_cladding_A, PhysicalWorld, op_surface_clad_air);
  G4LogicalBorderSurface* border_clad_air_B = new G4LogicalBorderSurface( "Border_clad_air_A", Physical_cladding_B, PhysicalWorld, op_surface_clad_air);
 
 // ==========  Optical surface (BAR - AIR for A & B) ========== 
  op_surface_bar_air = new G4OpticalSurface("BarAirSurface");
  op_surface_bar_air->SetType(dielectric_dielectric); 
- op_surface_bar_air->SetFinish(polished);
- op_surface_bar_air->SetModel(unified);
+ op_surface_bar_air->SetFinish(ground);
+ op_surface_bar_air->SetModel(glisur);
  G4LogicalBorderSurface* border_bar_air_A = new G4LogicalBorderSurface( "Border_bar_air_A", Physical_MID_A, PhysicalWorld, op_surface_bar_air);
  G4LogicalBorderSurface* border_bar_air_B = new G4LogicalBorderSurface( "Border_bar_air_A", Physical_MID_B, PhysicalWorld, op_surface_bar_air);
 

@@ -28,18 +28,18 @@ int main(int argc,char** argv)
     seeds[1] = 0;
     CLHEP::HepRandom::setTheSeeds(seeds);
     
-    //#ifdef G4MULTITHREADED
-      //  G4MTRunManager *runManager = new G4MTRunManager();
-    //#else
+    #ifdef G4MULTITHREADED
+       G4MTRunManager *runManager = new G4MTRunManager();
+    #else
     
         G4RunManager *runManager = new G4RunManager();
-    //#endif
+    #endif
     
     runManager->SetUserInitialization(new DetectorConstruction());
     runManager->SetUserInitialization(new PhysicsList());
     runManager->SetUserInitialization(new ActionInitialization());
     
-    runManager->Initialize(); 
+    //runManager->Initialize(); 
     
     G4UIExecutive *ui = 0;
     if(argc==1)
@@ -50,7 +50,8 @@ int main(int argc,char** argv)
     visManager->Initialize();
     G4UImanager *UImanager = G4UImanager::GetUIpointer();
 
- UImanager->ApplyCommand("/event/verbose 2");     // Show event details
+ //UImanager->ApplyCommand("/event/verbose 2");     // Show event details
+    //UImanager->ApplyCommand();
 
     if(ui)
     {
@@ -62,7 +63,7 @@ int main(int argc,char** argv)
     UImanager->ApplyCommand("/vis/scene/endofEventAction accumulate");//to show the particle
     //UImanager->ApplyCommand("/vis/set/volumeForField"); //MAGNETIC FIELD
     //UImanager->ApplyCommand("/vis/scene/add/magneticField"); // MAGNETIC FIELD
-    UImanager->ApplyCommand("/vis/scene/add/axes 0 0 0 0.5 m");
+    //UImanager->ApplyCommand("/vis/scene/add/axes 0 0 0 0.5 m");
     UImanager->ApplyCommand("/vis/scene/add/hits");
     UImanager->ApplyCommand("/vis/scene/add/eventID");
     UImanager->ApplyCommand("/vis/scene/add/date");
