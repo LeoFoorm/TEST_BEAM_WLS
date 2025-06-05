@@ -59,10 +59,10 @@ G4TouchableHandle touchedbar = step->GetPreStepPoint()->GetTouchableHandle();
                << "volume=" << track->GetVolume()->GetName()
                << G4endl;*/
             //track->GetCurrentStepNumber() > 1000 ||
-        if ( track->GetTrackLength() > 100*m) {
+        /*if ( track->GetTrackLength() > 100*m) {
             track->SetTrackStatus(fStopAndKill); // kill stuck photon
             return; // Salir inmediatamente del método para evitar trabajo innecesario
-        }
+        }*/
 
       //G4StepPoint *PostStep = step->GetPostStepPoint();
       //G4LogicalVolume* postLogical = PostStep->GetTouchableHandle()->GetVolume()->GetLogicalVolume();
@@ -236,24 +236,14 @@ if(particle->GetParticleName() == "mu+" ||  particle->GetParticleName() == "pi+"
         G4double B_pos_y = position_B.y()/(cm);
         G4double B_pos_z = position_B.z()/(cm);
 
-      /*if ((-50 <= B_pos_x && B_pos_x <= 50) )
-         {
-            fEventAction->Add_Positions_Layer_B_x(B_pos_x);
-         }*/
+     
+    
         fEventAction->Add_Positions_Layer_B_x(B_pos_x);
 
-       /*if((10.602 <= B_pos_y && B_pos_y <= 11.602) )
-        {
-            fEventAction->Add_Positions_Layer_B_y(B_pos_y);
-        }*/
+      
         fEventAction->Add_Positions_Layer_B_y(B_pos_y);
 
-      /*if ((-7.552 <= B_pos_z && B_pos_z <= -2.552) || 
-         (-2.45 <= B_pos_z && B_pos_z <= 2.55) || 
-         (2.652 <= B_pos_z && B_pos_z <= 7.652))
-         {
-            fEventAction->Add_Positions_Layer_B_x(B_pos_z);
-         }*/
+     
         fEventAction->Add_Positions_Layer_B_z(B_pos_z);
 
 

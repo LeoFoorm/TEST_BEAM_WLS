@@ -179,14 +179,14 @@ G4cout << "\n"<< G4endl;
 
 G4cout << "------------------------------------------------------------\n" << G4endl;
 G4cout << "ENERGY DEPOSITION ON BARS (MeV) :   \n" << G4endl;
-for (size_t i = 0; i < fEdepA.size(); i++){
+for (size_t i = 0; i < fEdepA.size(); ++i){
     if(fEdepA[i]>0){
         G4cout << "BAR A | " << "ID: "<< i << " |  Edep:  " << fEdepA[i] << "  MeV" << G4endl;
     } 
      man->FillNtupleDColumn(1, i, fEdepA[i]);  
 }
 
-for (size_t j = 0; j < fEdepB.size(); j++){
+for (size_t j = 0; j < fEdepB.size(); ++j){
     if(fEdepB[j]>0){
        G4cout << "BAR B | " << "ID: "<< j + 2  << " |  Edep:  " << fEdepB[j] << "  MeV" << G4endl; 
     }
@@ -205,12 +205,27 @@ for (size_t i = 0; i < fEdepB.size(); ++i) {
     G4cout << "TOTAL EDEP:  " << TOTAL_Edep << G4endl;
 
     man->FillNtupleDColumn(1, 33, TOTAL_Edep);
+
+
+//__________________________________________________
+for(size_t i = 0; i < fEdepA.size(); ++i){
+    if(fEdepA[i] > 0){
+        man->FillNtupleDColumn(1,47,fEdepA[i]);
+    }
+}
+
+for(size_t i = 0; i < fEdepB.size(); ++i){
+    if(fEdepB[i] > 0){
+        man->FillNtupleDColumn(1,48,fEdepB[i]);
+    }
+}
+//---------------------------------------------------
         
 //------------------------------------------------------------------------------------------
 G4cout << "" << G4endl;
 G4cout << "dE/dx (MeV/):   " << G4endl;
 
-for (size_t k = 0; k < fTotaldEdx_A.size(); k++){
+for (size_t k = 0; k < fTotaldEdx_A.size(); ++k){
     if(fTotaldEdx_A[k]>0){
        G4cout << "BAR A | " << "ID: "<< k  << " |  dE/dx:  " << fTotaldEdx_A[k] << "  MeV/mm" << G4endl; 
     }
@@ -218,7 +233,7 @@ for (size_t k = 0; k < fTotaldEdx_A.size(); k++){
 }
    
 
-for (size_t l = 0; l < fTotaldEdx_B.size(); l++){
+for (size_t l = 0; l < fTotaldEdx_B.size(); ++l){
     if(fTotaldEdx_B[l]>0){
        G4cout << "BAR B | " <<  "ID: "<< l + 2 << " |  dE/dx:  " << fTotaldEdx_B[l] << "  MeV/mm" << G4endl; 
     }
@@ -237,18 +252,34 @@ G4cout << "" << G4endl;
     
     man->FillNtupleDColumn(1, 34, TOTAL_dEdx);
 
+
+//__________________________________________________
+for(size_t i = 0; i < fTotaldEdx_A.size(); ++i){
+    if(fTotaldEdx_A[i] > 0){
+        man->FillNtupleDColumn(1,49,fTotaldEdx_A[i]);
+    }
+}
+
+for(size_t i = 0; i < fTotaldEdx_B.size(); ++i){
+    if(fTotaldEdx_B[i] > 0){
+        man->FillNtupleDColumn(1,50,fTotaldEdx_B[i]);
+    }
+}
+//---------------------------------------------------
+       
+
 //------------------------------------------------------------------------------------------
 G4cout << "\n------------------------------------------------------------" << G4endl;
 G4cout << "" << G4endl;
 G4cout << "DETECTED PHOTONS ON SiPM's:   " << G4endl;
-for (size_t m = 0; m < photonHits_event_A.size(); m++){
+for (size_t m = 0; m < photonHits_event_A.size(); ++m){
     if(photonHits_event_A[m]>0){
         G4cout << "SiPM A | " <<"ID: "<<  m  << " |  Detected photons:  " << photonHits_event_A[m] << "  photons" << G4endl;   
     }
     man->FillNtupleDColumn(1, m + fTotaldEdx_B.size()+ fTotaldEdx_A.size() + fEdepB.size() + fEdepA.size() ,  photonHits_event_A[m] ); 
 }
 
-for (size_t n = 0; n < photonHits_event_B.size(); n++){
+for (size_t n = 0; n < photonHits_event_B.size(); ++n){
     if(photonHits_event_B[n]>0){
         G4cout << "SiPM B | " <<"ID: "<< n +2   << " |  Detected photons:  " << photonHits_event_B[n] << "  photons" << G4endl; 
         }
@@ -264,6 +295,8 @@ G4int photons_detected_real_B = 0.0;
     for (auto bar : traversed_Bars_A) {
         if(bar >=0 && bar <2){
             photons_detected_real_A += photonHits_event_A[bar];
+            man->FillNtupleDColumn(1,51,photons_detected_real_A);
+
         } else{
             G4cerr << " ERROR: índice inválido en traversed_Bars_A: " << bar << G4endl;
         }   
@@ -272,6 +305,7 @@ G4int photons_detected_real_B = 0.0;
     for (auto bar : traversed_Bars_B) {
         if(bar >=2 && bar <5){
             photons_detected_real_B += photonHits_event_B[bar-2];
+            man->FillNtupleDColumn(1,52,photons_detected_real_B);
         } else {
             G4cerr << "ERROR: índice inválido en traversed_Bars_B: " << bar << G4endl;
         }
@@ -289,6 +323,7 @@ G4int photons_detected_real_B = 0.0;
   
 
 
+
 //------------------------------------------------------------------------------------------
 G4cout << "" << G4endl;
 G4cout << "GENERATED PHOTONS:   " << G4endl;
@@ -299,7 +334,7 @@ for (size_t u = 0; u < fGenerated_photons_A.size(); ++u){
     man->FillNtupleDColumn(1, u + photonHits_event_B.size() + photonHits_event_A.size() + fTotaldEdx_B.size()+ fTotaldEdx_A.size() + fEdepB.size() + fEdepA.size() ,   fGenerated_photons_A[u] );   
 }
 
-for (size_t v = 0; v < fGenerated_photons_B.size(); v++){
+for (size_t v = 0; v < fGenerated_photons_B.size(); ++v){
     if(fGenerated_photons_B[v]>0){
         G4cout << "BAR B | " <<"ID: "<<  v + 2   << " |  Generated photons:  " << fGenerated_photons_B[v] << "  photons" << G4endl; 
         }
@@ -332,6 +367,20 @@ for (size_t i = 0; i < fGenerated_photons_B.size(); ++i) {
       man->FillNtupleDColumn(1, 35, TOTAL_Generated_photons);
 
 G4cout << "\n------------------------------------------------------------" << G4endl;
+
+//__________________________________________________
+for(size_t i = 0; i < fGenerated_photons_A.size(); ++i){
+    if(fGenerated_photons_A[i] > 0){
+        man->FillNtupleDColumn(1,53,fGenerated_photons_A[i]);
+    }
+}
+
+for(size_t i = 0; i < fGenerated_photons_B.size(); ++i){
+    if(fGenerated_photons_B[i] > 0){
+        man->FillNtupleDColumn(1,54,fGenerated_photons_B[i]);
+    }
+}
+//---------------------------------------------------
 
  //-------------------------------------------------------------------------------------------
 G4cout << "" << G4endl;

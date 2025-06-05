@@ -94,22 +94,32 @@ std::vector<G4double> energy_test = {
    std::vector<G4double> RIndexFiber = { 1.60, 1.60 };
 
   std::vector<G4double> AbsFiber = {
-    /*3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m,
+    5.40 * m, 5.40 * m, 5.40 * m, 5.40 * m, 5.40 * m, 4.60 * m, 4.60 * m,
+    4.60 * m, 4.60 * m, 4.60 * m, 4.60 * m, 4.60 * m, 4.60 * m, 4.60 * m,
+    4.00 * m, 4.00 * m, 4.00 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m,
+    3.60 * m, 3.51 * m, 3.51 * m, 3.51 * m, 3.51 * m, 1.00 * m, 1.00 * m,   //This gives low number of photons
+    1.00 * m, 1.00 * m, 1.00 * m, 1.00 * m, 1.00 * m, 1.00 * m, 1.00 * m,
+    1.00 * m, 1. * mm, 1. * mm, 1. * mm, 1. * mm, 1. * mm, 1. * mm,
+    1. * mm, 1. * mm, 1. * mm, 1. * mm, 1. * mm, 1. * mm, 1. * mm,
+    1. * mm
+    
+   /*3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m,
     3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m,
     3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m,
-    3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m,
-    3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m,
-    3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m,
-    3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m, 3.60 * m,
-    3.60 * m*/
+    3.60 * m, 1. * mm, 1. * mm, 1. * mm, 1. * mm, 1. * mm, 1. * mm,         //This gives high photons number
+    1. * mm, 1. * mm, 1. * mm, 1. * mm, 1. * mm, 1. * mm, 1. * mm,
+    1. * mm, 1. * mm, 1. * mm, 1. * mm, 1. * mm, 1. * mm, 1. * mm,
+    1. * mm, 1. * mm, 1. * mm, 1. * mm, 1. * mm, 1. * mm, 1. * mm,
+    1. * mm*/ 
+
+    /*5.40 * m, 5.40 * m, 5.40 * m, 5.40 * m, 5.40 * m, 5.40 * m, 5.40 * m,
     5.40 * m, 5.40 * m, 5.40 * m, 5.40 * m, 5.40 * m, 5.40 * m, 5.40 * m,
     5.40 * m, 5.40 * m, 5.40 * m, 5.40 * m, 5.40 * m, 5.40 * m, 5.40 * m,
-    5.40 * m, 5.40 * m, 5.40 * m, 5.40 * m, 5.40 * m, 5.40 * m, 5.40 * m,
-    5.40 * m, 5.40 * m, 5.40 * m, 5.40 * m, 5.40 * m, 5.40 * m, 5.40 * m,
+    5.40 * m, 5.40 * m, 5.40 * m, 5.40 * m, 5.40 * m, 5.40 * m, 5.40 * m,   //This gives an expected number of photons
     5.40 * m, 1.10 * m, 1.10 * m, 1.10 * m, 1.10 * m, 1.10 * m, 1.10 * m,
     1.10 * m, 1. * mm,  1. * mm,  1. * mm,  1. * mm,  1. * mm,  1. * mm,
     1. * mm,  1. * mm,  1. * mm,  1. * mm,  1. * mm,  1. * mm,  1. * mm,
-    1. * mm
+    1. * mm*/
   };
 
   std::vector<G4double> EmissionFiber = {
@@ -484,7 +494,7 @@ for (G4int l = 0; l < 3; l++)
   Logic_Fibers_B.push_back(Logic_Fiber_B);
 
   Physical_Fiber_B = new  G4PVPlacement(rotationY, G4ThreeVector(0, distance_modules + 0.1 * cm,  -7.602 * cm + (5.102*l) * cm),
-                                   Logic_Fiber_B, "Physical_Fiber_B_up", LogicWorld, false, l, true);
+                                   Logic_Fiber_B, "Physical_Fiber_B_up", LogicWorld, false, l+2, true);
  }
 
  for (G4int l = 0; l < 3; l++)
@@ -493,7 +503,7 @@ for (G4int l = 0; l < 3; l++)
   Logic_Fibers_B.push_back(Logic_Fiber_B);
 
   Physical_Fiber_B = new  G4PVPlacement(rotationY, G4ThreeVector(0, distance_modules - 0.1 * cm,  -7.602 * cm + (5.102*l) * cm),
-                                   Logic_Fiber_B, "Physical_Fiber_B_down", LogicWorld, false, l, true);
+                                   Logic_Fiber_B, "Physical_Fiber_B_down", LogicWorld, false, l+2, true);
  }
 
 //          9 CLADDING B
@@ -513,7 +523,7 @@ for (G4int l = 0; l < 3; l++)
   Logic_claddings_B.push_back(Logic_cladding_B);
 
   Physical_cladding_B = new  G4PVPlacement(rotationY, G4ThreeVector(0, distance_modules + 0.1 * cm,  -7.602 * cm + (5.102*l) * cm),
-                                   Logic_cladding_B, "Physical_cladding_B_up", LogicWorld, false, l, true);
+                                   Logic_cladding_B, "Physical_cladding_B_up", LogicWorld, false, l+2, true);
  }
 
  for (G4int l = 0; l < 3; l++)
@@ -522,7 +532,7 @@ for (G4int l = 0; l < 3; l++)
   Logic_claddings_B.push_back(Logic_cladding_B);
 
   Physical_cladding_B = new  G4PVPlacement(rotationY, G4ThreeVector(0, distance_modules - 0.1 * cm,  -7.602 * cm + (5.102*l) * cm),
-                                   Logic_cladding_B, "Physical_cladding_B_down", LogicWorld, false, l, true);
+                                   Logic_cladding_B, "Physical_cladding_B_down", LogicWorld, false, l+2, true);
  }
 
   // ==========  Optical surface ========== 

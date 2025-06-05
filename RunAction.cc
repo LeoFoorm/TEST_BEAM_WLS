@@ -72,6 +72,19 @@ RunAction::RunAction()
   man->CreateNtupleDColumn("B_ANGLE_RAD_RESPEC_XZ"); //45
   man->CreateNtupleDColumn("B_ANGLE_DEG_RESPECT_XZ"); //46
 
+
+  man->CreateNtupleDColumn("Total_Edep_Layer_A"); //47
+  man->CreateNtupleDColumn("Total_Edep_Layer_B"); //48
+
+  man->CreateNtupleDColumn("Total_dEdx_Layer_A"); //49
+  man->CreateNtupleDColumn("Total_dEdx_Layer_B"); //50
+
+  man->CreateNtupleDColumn("Total_Detected_Photons_Layer_A"); //51
+  man->CreateNtupleDColumn("Total_Detected_Photons_Layer_B"); //52
+
+  man->CreateNtupleDColumn("Total_Generated_Photons_Layer_A"); //53
+  man->CreateNtupleDColumn("Total_Generated_Photons_Layer_B"); //54
+
   
 
   man->FinishNtuple(1);
@@ -98,6 +111,9 @@ void RunAction:: BeginOfRunAction(const G4Run* run)
 
 void RunAction::EndOfRunAction(const G4Run*)
 {
+
+
+
 G4AnalysisManager *man = G4AnalysisManager::Instance();
 
  man->Write();
